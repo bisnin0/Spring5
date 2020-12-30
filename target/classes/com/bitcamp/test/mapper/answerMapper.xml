@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitcamp.test.answer.AnswerDaoImp">
+	<select id="allRecord" resultType="com.bitcamp.test.answer.AnswerVO" >
+		select no, userid, subject, writedate, step from answerboard
+		order by ref desc, lvl asc
+	</select>
+	<insert id="recordInsert" parameterType="com.bitcamp.test.answer.AnswerVO">
+		insert into answerboard(no, subject, content, userid, ref) 
+		values(a_sq.nextval, #{subject}, #{content}, #{userid}, a_sq.currval)
+	</insert>
+	<select id="recordSelect" resultType="com.bitcamp.test.answer.AnswerVO">
+		select no, subject, content, userid, writedate from answerboard
+		where no=#{param1}
+	</select>
+	<select id="optionSelect" resultType="com.bitcamp.test.answer.AnswerVO">
+		select no, ref, step, lvl from answerboard
+		where no=#{param1}
+	</select>
+	<update id="lvlUpdate" parameterType="com.bitcamp.test.answer.AnswerVO">
+		update answerboard set lvl=lvl+1 where ref=#{ref} and lvl>#{lvl}
+	</update>
+	<insert id="replyInsert" parameterType="com.bitcamp.test.answer.AnswerVO">
+		insert into answerboard(no, subject, content, userid, ref, step, lvl)
+		values(a_sq.nextval, #{subject}, #{content}, #{userid}, #{ref}, #{step}, #{lvl})
+	</insert>
+</mapper>
+
+
+
+
+
+
+
